@@ -15,7 +15,7 @@
 				THREE.Cache.enabled = true;
 				var count = 0;
 				var loader = new THREE.FileLoader();
-				var fshader, vshader, fshader2, fshader3;
+				var fshader, vshader, fshader2;
 
 				loader.load('shaders/vertexShader.vert',
 				// onLoad callback
@@ -65,26 +65,6 @@
 						count += 1;
 						// addCoolCube(); // we will write this method
 						addCoolCube2(); // we will write this method
-
-					},
-				// onProgress callback
-					function (xhr) {
-						console.log((xhr.loaded/xhr.total * 100)+ '% loaded');
-					},
-				// onError callback
-					function (err) {
-						console.error('An error happened');
-					}
-				);
-
-				loader.load('shaders/fragmentShader3.frag',
-				// onLoad callback
-					function (data) {
-						console.log(data); // output the text to the console
-						fshader3 = data;
-						count += 1;
-						// addCoolCube(); // we will write this method
-						addCoolCube3(); // we will write this method
 
 					},
 				// onProgress callback
@@ -154,38 +134,6 @@
 					}	
 				}
 
-			// addCoolCube3 method
-				function addCoolCube3() {
-					if(count == 4) {
-						let uniforms = {
-							red: {type: 'vec3', value: new 
-								THREE.Color(0xff0000)},
-							green: {type: 'vec3', value: new
-								THREE.Color(0x00ff00)},
-							blue: {type: 'vec3', value: new 
-								THREE.Color(0x0000ff)},
-							black: {type: 'vec3', value: new 
-								THREE.Color(0x000000)},
-
-						};
-
-						geometry3 = new THREE.BoxGeometry(1, 1, 1);
-						geometry3.rotateX(0.8);
-						geometry3.rotateY(0.5);
-						geometry3.rotateZ(0.5);
-						material3 =  new THREE.ShaderMaterial({
-							uniforms: uniforms,
-							fragmentShader: fshader3,
-							vertexShader: vshader,
-							precision: "mediump"});
-
-						mesh3 = new THREE.Mesh(geometry3, material3);
-						mesh3.position.y = -2;
-						mesh3.position.x = -2;
-						scene.add(mesh3);
-					}	
-				}
-
 			// setup the scene
       			var scene = new THREE.Scene();
       			var camera = new THREE.PerspectiveCamera(75, 
@@ -194,6 +142,9 @@
       			renderer.setSize(window.innerWidth, window.innerHeight);
       			document.body.appendChild(renderer.domElement);
 				camera.position.z = 5;
+
+			// add fog
+				scene.fog = new THREE.FogExp2( 0xefd1b5, .15 );
 			
 			// setup the cube
 				var geometry = new THREE.BoxGeometry();
@@ -223,7 +174,7 @@
 			// add the light
 				var light = new THREE.PointLight(0xffffff, 1, 1000);
 				light.position.set(10, 10, 10);
-				scene.add(light);
+				// scene.add(light);
 
 			function animate() {
 				requestAnimationFrame(animate);
