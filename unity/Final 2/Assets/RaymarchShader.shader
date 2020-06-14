@@ -22,6 +22,7 @@
 			uniform float4x4 _CamFrustum, _CamToWorld;
 			uniform float _maxDistance;
 			uniform float4 _sphere1;
+			uniform float3 _LightDir;
 
             struct appdata
             {
@@ -70,7 +71,7 @@
 
 			fixed4 raymarching (float3 ro, float3 rd) {
 				fixed4 result = fixed4(1, 1, 1, 1);
-				const int max_iteration = 64;
+				const int max_iteration = 128;
 				float t = 0;		// distance travelled along the ray direction
 
 				for (int i = 0; i < max_iteration; i++) {
@@ -86,7 +87,9 @@
 					if (d < 0.01) {	// we have hit something!
 						// shading!
 						float3 n = getNormal(p);
-						result = fixed4(1, 1, 1, 1);
+						float light = dot(-_lightDir, n);
+
+						result = fixed4(1, 1, 1, 1) * light;
 						break;
 					}
 					t += d;
