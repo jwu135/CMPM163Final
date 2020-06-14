@@ -21,6 +21,7 @@
 			sampler2D _MainTex;
 			uniform float4x4 _CamFrustum, _CamToWorld;
 			uniform float _maxDistance;
+			uniform float4 _sphere1;
 
             struct appdata
             {
@@ -53,8 +54,8 @@
 				return length(p) - s;
 			}
 
-			float distanceField(float p) {
-				float Sphere1 = sdSphere(p - float3(0, 0, 0), 2.0);
+			float distanceField(float3 p) {
+				float Sphere1 = sdSphere(p - _sphere1.xyz, _sphere1.w);
 				return Sphere1;
 			}
 
