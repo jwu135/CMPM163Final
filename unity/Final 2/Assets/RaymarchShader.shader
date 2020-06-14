@@ -59,15 +59,6 @@
 				return Sphere1;
 			}
 
-			float3 getNormal(float3 p) {
-				const float2 offset = float2(0.001, 0.0);
-				float3 n = float3(
-					distanceField(p + offset.xyy) - distanceField(p - offset.xyy),
-					distanceField(p + offset.yxy) - distanceField(p - offset.yxy),
-					distanceField(p + offset.yyx) - distanceField(p - offset.yyx));
-				return normalize(n);
-			}
-
 			fixed4 raymarching (float3 ro, float3 rd) {
 				fixed4 result = fixed4(1, 1, 1, 1);
 				const int max_iteration = 64;
@@ -85,7 +76,6 @@
 					float d = distanceField(p);
 					if (d < 0.01) {	// we have hit something!
 						// shading!
-						float3 n = getNormal(p);
 						result = fixed4(1, 1, 1, 1);
 						break;
 					}
