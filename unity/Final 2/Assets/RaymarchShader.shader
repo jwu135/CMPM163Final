@@ -77,7 +77,7 @@
 				for (int i = 0; i < max_iteration; i++) {
 					if (t > _maxDistance) {
 						// environment
-						result = fixed4(rd, 1);
+						result = fixed4(rd, 0);
 						break;
 					}
 
@@ -97,12 +97,13 @@
 				return result;
 			}
 
-			fixed4 frag (v2f i) : SV_Target
+			fixed4 frag(v2f i) : SV_Target
 			{
+				fixed3 col = tex2D(_MainTex, i.uv);
 				float3 rayDirection = normalize(i.ray.xyz);
 				float3 rayOrigin = _WorldSpaceCameraPos;
 				fixed4 result = raymarching(rayOrigin, rayDirection);
-				return result;
+				return fixed4(col * (1.0 - result.w) + result.xyz * result.w , 1.0);
             }
             ENDCG
         }

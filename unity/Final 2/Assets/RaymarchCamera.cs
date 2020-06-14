@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 [ExecuteInEditMode]
-public class RaymarchCamera : MonoBehaviour
+public class RaymarchCamera : SceneViewFilter
 {
     /*    [SerializeField]
         private Shader _shader;
@@ -58,6 +58,9 @@ public class RaymarchCamera : MonoBehaviour
         _raymarchMaterial.SetVector("_sphere1", _sphere1);
 
         RenderTexture.active = destination;
+        _raymarchMaterial.SetTexture("_MainTex", source);
+        
+
         GL.PushMatrix();
         GL.LoadOrtho();
         _raymarchMaterial.SetPass(0);

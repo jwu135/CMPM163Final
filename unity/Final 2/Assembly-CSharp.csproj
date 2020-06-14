@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\RaymarchCamera.cs" />
+    <Compile Include="Assets\SceneViewFilter.cs" />
     <None Include="Assets\RaymarchShader.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/GitHub/CMPM163Final/unity/Final 2/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
