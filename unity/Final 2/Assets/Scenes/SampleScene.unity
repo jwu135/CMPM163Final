@@ -310,6 +310,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 13362427d7a027f43886d2a6f75f971f, type: 3}
-  _directionLight: {fileID: 0}
   _maxDistance: 7.9
-  _sphere1: {x: 0, y: 0, z: 0, w: 1.98}
+  _sphere1: {x: 0, y: 0, z: 0, w: 2.1}

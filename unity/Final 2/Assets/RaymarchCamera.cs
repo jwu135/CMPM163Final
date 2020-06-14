@@ -6,10 +6,9 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class RaymarchCamera : MonoBehaviour
 {
-    /*    [SerializeField]
-        private Shader _shader;
-    */
-    public Shader _shader;
+    [SerializeField]
+    private Shader _shader;
+
     public Material _raymarchMaterial
     {
         get
@@ -39,8 +38,6 @@ public class RaymarchCamera : MonoBehaviour
 
     private Camera _cam;
 
-    public Transform _directionLight;
-    
     public float _maxDistance;
     public Vector4 _sphere1;
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -51,7 +48,6 @@ public class RaymarchCamera : MonoBehaviour
             return;
         }
 
-        _raymarchMaterial.SetVector("_LightDir", _directionLight ? _directionLight.forward : Vector3.down);
         _raymarchMaterial.SetMatrix("_CamFrustum", CamFrustum(_camera));
         _raymarchMaterial.SetMatrix("_CamToWorld", _camera.cameraToWorldMatrix);
         _raymarchMaterial.SetFloat("_maxDistance", _maxDistance);
