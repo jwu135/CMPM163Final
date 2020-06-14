@@ -87,7 +87,7 @@
 					if (d < 0.01) {	// we have hit something!
 						// shading!
 						float3 n = getNormal(p);
-						float light = dot(-_lightDir, n);
+						float light = dot(-_LightDir, n);
 
 						result = fixed4(1, 1, 1, 1) * light;
 						break;
