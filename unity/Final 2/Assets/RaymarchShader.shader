@@ -45,11 +45,8 @@
                 o.uv = v.uv;
 
 				o.ray = _CamFrustum[(int)index].xyz;
-
 				o.ray /= abs(o.ray.z);
-
 				o.ray = mul(_CamToWorld, o.ray);
-
 				return o;
             }
 

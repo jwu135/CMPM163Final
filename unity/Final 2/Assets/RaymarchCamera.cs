@@ -6,9 +6,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class RaymarchCamera : MonoBehaviour
 {
-    /*[SerializeField]
-    private Shader _shader;*/
-    public Shader _shader;
+    [SerializeField]
+    private Shader _shader;
 
     public Material _raymarchMaterial
     {
