@@ -19,6 +19,7 @@
             #include "UnityCG.cginc"
 
 			sampler2D _MainTex;
+			uniform sampler2D _CameraDepthTexture;
 			uniform float4x4 _CamFrustum, _CamToWorld;
 			uniform float _maxDistance;
 			uniform float4 _sphere1;
@@ -69,13 +70,13 @@
 				return normalize(n);
 			}
 
-			fixed4 raymarching (float3 ro, float3 rd) {
+			fixed4 raymarching (float3 ro, float3 rd, float depth) {
 				fixed4 result = fixed4(1, 1, 1, 1);
 				const int max_iteration = 128;
 				float t = 0;		// distance travelled along the ray direction
 
 				for (int i = 0; i < max_iteration; i++) {
-					if (t > _maxDistance) {
+					if (t > _maxDistance || t >= depth) {
 						// environment
 						result = fixed4(rd, 0);
 						break;
@@ -89,7 +90,7 @@
 						float3 n = getNormal(p);
 						float light = dot(-_LightDir, n);
 
-						result = fixed4(1, 1, 1, 1) * light;
+						result = fixed4(fixed3(1, 1, 1) * light, 1);	//fixed4(1, 1, 1, 1) * light;
 						break;
 					}
 					t += d;
@@ -99,10 +100,12 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
+				float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.uv).r);
+				depth *= length(i.ray);
 				fixed3 col = tex2D(_MainTex, i.uv);
 				float3 rayDirection = normalize(i.ray.xyz);
 				float3 rayOrigin = _WorldSpaceCameraPos;
-				fixed4 result = raymarching(rayOrigin, rayDirection);
+				fixed4 result = raymarching(rayOrigin, rayDirection, depth);
 				return fixed4(col * (1.0 - result.w) + result.xyz * result.w , 1.0);
             }
             ENDCG
